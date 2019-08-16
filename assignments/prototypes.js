@@ -121,3 +121,128 @@ function GameObject (attr){
  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+
+  function Hero (param){
+    Humanoid.call(this, param);
+    this.name = param.name;
+    this.team = param.team;
+    this.weapons = param.weapons;
+    this.healthPoints = param.healthPoints;
+    this.attackPoints = param.attackPoints
+  }
+
+  Hero.prototype = Object.create(Humanoid.prototype);
+
+  Hero.prototype.intro = function(){
+    return `The hero of the ${this.team}, ${this.name} has entered the battlefield`;
+  }
+
+  Hero.prototype.items = function(){
+    return `Available weapons: ${this.weapons} Health Points: ${this.healthPoints}`;
+    
+  }
+
+  Hero.prototype.heroAttack = function(){
+    const damage = this.healthPoints - iceKing.attackPoints;
+    return `${this.name} was ambushed by ${iceKing.name} and recieved damage that reduced Health Points to ${damage}`;
+  }
+
+   Hero.prototype.win = function(){
+    return `${this.name} wins`;
+  }
+
+  function Villian (param){
+    Humanoid.call(this, param);
+    Hero.call(this, param);
+    this.name = param.name;
+    this.team = param.team;
+    this.healthPoints = param.healthPoints;
+    this.attackPoints = param.attackPoints
+    this.damage = param.damage;
+  }
+
+   Villian.prototype = Object.create(Humanoid.prototype);
+
+    Villian.prototype.intro = function(){
+    return `The ${this.name} of the ${this.team}, has entered the battlefield`;
+  }
+
+  Villian.prototype.items = function(){
+    return `Available weapons: ${this.weapons} Health Points: ${this.healthPoints}`;
+    
+  }
+
+  Villian.prototype.attack = function(){
+     this.damage = this.healthPoints - finn.attackPoints;
+        return `The ${this.name} was attacked by ${finn.name} and recieved damage that reduced Health Points to ${this.damage}`;
+  }
+
+  Villian.prototype.secondAttack = function(){
+     this.damage = this.damage - finn.attackPoints;
+        return `${finn.name} attacks again and reduces ${this.name} Health to ${this.damage} points. ${this.name} loses crown during fight, turns into ${simon.name}`;
+  }
+
+
+  const iceKing = new Villian({
+    createdAt: new Date(),
+        dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 20,
+    attackPoints: 5,
+    damage: 0,
+    name: 'Ice King',
+    team: 'Ice Kingdom',
+    weapons: [
+      'Ice Crown',
+      'Penguins'
+    ],
+    language: 'English'
+
+  });
+
+  const finn = new Hero({
+    createdAt: new Date(),
+        dimensions: {
+      length: 2,
+      width: 2,
+      height: 3,
+    },
+    healthPoints: 20,
+    attackPoints: 8,
+    name: 'Finn the Human',
+    team: 'Land of Ooo',
+    weapons: [
+      'Finn Sword',
+      'Grass Sword',
+    ],
+    language: 'English',
+  });
+
+  const simon = new Hero({
+    createdAt: new Date(),
+        dimensions: {
+      length: 2,
+      width: 2,
+      height: 3,
+    },
+    healthPoints: 12,
+    attackPoints: 8,
+    name: 'Simon Petrikov',
+    team: 'Land of Ooo',
+    weapons: "Smart",
+    language: 'English',
+  });
+
+  
+  console.log(finn.intro());
+  console.log(finn.items());
+  console.log(iceKing.intro());
+  console.log(iceKing.items());
+  console.log(finn.heroAttack());
+  console.log(iceKing.attack());
+  console.log(iceKing.secondAttack());
+  console.log(finn.win());
